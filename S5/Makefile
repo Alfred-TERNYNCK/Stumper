@@ -14,14 +14,16 @@ NAME = stumper
 
 CC = gcc
 
-CFLAGS = -I include/
+CPPFLAGS = -iquote include/
 
-RM= rm -f
+CFLAGS = -Wall -Wextra -Werror
+
+RM = rm -f
 
 all:	$(NAME)
 
 $(NAME):	$(OBJ)
-	$(CC) -o $(NAME) $(OBJ)
+	$(CC) -o $(NAME) $(OBJ) $(CPPFLAGS) $(CFLAGS)
 
 clean:
 	$(RM) $(OBJ)
@@ -30,6 +32,10 @@ fclean:
 	make clean
 	$(RM) $(NAME)
 
+debug : CFLAGS += -g3
+
+debug : all
+
 re:	fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean debug re
